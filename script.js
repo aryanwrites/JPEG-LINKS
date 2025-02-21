@@ -1,8 +1,5 @@
 const linkStorage = {
-    'jpeg-links': [
-        { url: 'https://example.com/jpeg-guide', title: 'JPEG Compression Guide' },
-        { url: 'https://example.com/photo-editors', title: 'Best Photo Editors 2025' }
-    ],
+   
     
 };
 
