@@ -1,18 +1,13 @@
- // Store links in localStorage by category
- const linkStorage = {
-    
-    'tutorials': [
-        { url: 'https://example.com/lighting-tutorial', title: 'Studio Lighting Basics' },
-        { url: 'https://example.com/composition', title: 'Rule of Thirds Explained' }
+const linkStorage = {
+    'jpeg-links': [
+        { url: 'https://example.com/jpeg-guide', title: 'JPEG Compression Guide' },
+        { url: 'https://example.com/photo-editors', title: 'Best Photo Editors 2025' }
     ],
-    'events': [
-        { url: 'https://example.com/spring-exhibition', title: 'Spring Exhibition 2025' },
-        { url: 'https://example.com/photo-walk', title: 'Downtown Photo Walk - March 15' }
-    ]
+    
 };
 
-
-const CLUB_PASSWORD = "1234";
+// Club password (in a real app, this would be server-side validated)
+const CLUB_PASSWORD = "1111";
 let isAuthenticated = false;
 
 // DOM Elements
@@ -45,6 +40,13 @@ function saveLinks(links) {
 function displayLinks() {
     const links = loadLinks();
     
+    // Display JPEG links
+    const jpegContainer = document.getElementById('jpegLinksContainer');
+    jpegContainer.innerHTML = '';
+    links['jpeg-links'].forEach(link => {
+        const linkElement = createLinkElement(link, 'jpeg-links');
+        jpegContainer.appendChild(linkElement);
+    });
     
     // Display Tutorial links
     const tutorialsContainer = document.getElementById('tutorialsLinksContainer');
