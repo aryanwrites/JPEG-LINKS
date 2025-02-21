@@ -51,6 +51,11 @@ header {
     padding-bottom: 0.5rem;
 }
 
+.sidebar p a {
+    color: white;
+    font-size: x-large;
+}
+
 .content {
     flex: 1;
     padding: 2rem;
