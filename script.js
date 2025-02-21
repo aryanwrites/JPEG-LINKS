@@ -231,3 +231,35 @@ window.addEventListener('DOMContentLoaded', () => {
     displayLinks();
     checkAuth();
 });
+
+// When adding links, update the URL
+function addLinkAndUpdateURL(category, url, title) {
+    // Add to localStorage
+    const links = JSON.parse(localStorage.getItem('links') || '{}');
+    if (!links[category]) links[category] = [];
+    links[category].push({url, title});
+    localStorage.setItem('links', JSON.stringify(links));
+    
+    // Create shareable URL
+    const encodedLinks = encodeURIComponent(JSON.stringify(links));
+    const newURL = window.location.origin + window.location.pathname + '?data=' + encodedLinks;
+    
+    // Update history and display link
+    window.history.pushState({}, '', newURL);
+    alert("Share this URL for others to see these links: " + newURL);
+  }
+  
+  // On page load, check for URL parameters
+  function loadFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const data = urlParams.get('data');
+    if (data) {
+      try {
+        const links = JSON.parse(decodeURIComponent(data));
+        localStorage.setItem('links', JSON.stringify(links));
+        displayLinks();
+      } catch (e) {
+        console.error("Error parsing URL data", e);
+      }
+    }
+  }
