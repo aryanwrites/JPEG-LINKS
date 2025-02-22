@@ -41,59 +41,96 @@ async function displayLinks() {
         });
     }
     
-    // Display Tutorial links
-    const tutorialsContainer = document.getElementById('tutorialsLinksContainer');
-    tutorialsContainer.innerHTML = '';
-    if (links['tutorials']) {
-        links['tutorials'].forEach(link => {
-            const linkElement = createLinkElement(link, 'tutorials');
-            tutorialsContainer.appendChild(linkElement);
-        });
-    }
-    
-    // Display Event links
-    const eventsContainer = document.getElementById('eventsLinksContainer');
-    eventsContainer.innerHTML = '';
-    if (links['events']) {
-        links['events'].forEach(link => {
-            const linkElement = createLinkElement(link, 'events');
-            eventsContainer.appendChild(linkElement);
-        });
-    }
+
 }
 
 // Create a link element with delete functionality if authenticated
+// function createLinkElement(link, category) {
+//     const linkDiv = document.createElement('div');
+//     linkDiv.className = 'link-item';
+    
+    
+//     const linkAnchor = document.createElement('a');
+//     linkAnchor.href = link.url;
+//     linkAnchor.target = '_blank';
+//     linkAnchor.textContent = link.title;
+//     linkDiv.appendChild(linkAnchor);
+    
+//     // Add delete button if authenticated
+//     // if (isAuthenticated) {
+//     //     const deleteButton = document.createElement('button');
+//     //     deleteButton.textContent = 'Delete';
+//     //     deleteButton.style.marginLeft = '10px';
+//     //     deleteButton.style.padding = '3px 8px';
+//     //     deleteButton.style.background = '#e74c3c';
+//     //     deleteButton.style.color = 'white';
+//     //     deleteButton.style.border = 'none';
+//     //     deleteButton.style.borderRadius = '3px';
+//     //     deleteButton.style.cursor = 'pointer';
+        
+//     //     deleteButton.addEventListener('click', () => {
+//     //         alert('Please update the links.json file to remove this link');
+//     //     });
+        
+//     //     linkDiv.appendChild(deleteButton);
+//     // }
+    
+//     return linkDiv;
+// }
+
 function createLinkElement(link, category) {
     const linkDiv = document.createElement('div');
     linkDiv.className = 'link-item';
     
+    // Assign category as a data attribute (optional)
+    if (category) {
+        linkDiv.setAttribute('data-category', category);
+    }
+
+    // Creating an inner div
+    const innerDiv = document.createElement('div');
+    innerDiv.className = 'link-content';
+
+    // Creating title container for flexbox alignment
+    const titleContainer = document.createElement('div');
+    titleContainer.className = 'title-container';
+
+    // Creating title element
+    const titleElement = document.createElement('h4');
+    titleElement.textContent = link.title;
+
+    // Creating covered by element
+    const coveredbyElement = document.createElement('p');
+    coveredbyElement.className = 'covered_by';
+    coveredbyElement.textContent = `Covered by: ${link.coveredby}`;
+
+    // Append title and coveredBy inside titleContainer
+    titleContainer.appendChild(titleElement);
+    titleContainer.appendChild(coveredbyElement);
+
+    // Creating paragraph with anchor tag
+    const linkParagraph = document.createElement('p');
     const linkAnchor = document.createElement('a');
     linkAnchor.href = link.url;
     linkAnchor.target = '_blank';
-    linkAnchor.textContent = link.title;
-    linkDiv.appendChild(linkAnchor);
-    
-    // Add delete button if authenticated
-    // if (isAuthenticated) {
-    //     const deleteButton = document.createElement('button');
-    //     deleteButton.textContent = 'Delete';
-    //     deleteButton.style.marginLeft = '10px';
-    //     deleteButton.style.padding = '3px 8px';
-    //     deleteButton.style.background = '#e74c3c';
-    //     deleteButton.style.color = 'white';
-    //     deleteButton.style.border = 'none';
-    //     deleteButton.style.borderRadius = '3px';
-    //     deleteButton.style.cursor = 'pointer';
-        
-    //     deleteButton.addEventListener('click', () => {
-    //         alert('Please update the links.json file to remove this link');
-    //     });
-        
-    //     linkDiv.appendChild(deleteButton);
-    // }
-    
+    linkAnchor.textContent = 'Open Link'; 
+    linkAnchor.className = 'link-anchor'; // Optional for styling
+
+    linkParagraph.appendChild(linkAnchor);
+
+    // Appending elements inside innerDiv
+    innerDiv.appendChild(titleContainer);
+    innerDiv.appendChild(linkParagraph);
+
+    // Appending innerDiv inside linkDiv
+    linkDiv.appendChild(innerDiv);
+
     return linkDiv;
 }
+
+
+
+
 
 // Authentication functions
 function checkAuth() {

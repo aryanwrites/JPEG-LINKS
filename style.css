@@ -112,6 +112,20 @@ header {
     color: #3498db;
 }
 
+.title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.covered_by {
+    margin-left: auto; /* Pushes it to the right */
+    font-size: 0.9rem;
+    color: gray; /* Optional styling */
+}
+
+
 .add-link-button {
     background-color: #3498db;
     color: white;
