@@ -1,5 +1,6 @@
-const CLUB_PASSWORD = "1111";
+
 let isAuthenticated = false;
+
 
 // DOM Elements
 const authOverlay = document.getElementById('authOverlay');
@@ -123,7 +124,7 @@ function logout() {
         panel.classList.remove('active');
     });
 }
-
+const CLUB_PASSWORD = "1111";
 // Event Listeners
 authSubmitBtn.addEventListener('click', () => {
     if (passwordInput.value === CLUB_PASSWORD) {
