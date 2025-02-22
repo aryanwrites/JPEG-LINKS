@@ -1,9 +1,3 @@
-const linkStorage = {
-   
-    
-};
-
-// Club password (in a real app, this would be server-side validated)
 const CLUB_PASSWORD = "1111";
 let isAuthenticated = false;
 
@@ -16,50 +10,55 @@ const addLinkButtons = document.querySelectorAll('.add-link-button');
 const adminPanels = document.querySelectorAll('.admin-panel');
 const submitButtons = document.querySelectorAll('[data-action="add-link"]');
 
-// Load links from localStorage or use default data
-function loadLinks() {
-    const storedLinks = localStorage.getItem('photographerClubLinks');
-    if (storedLinks) {
-        return JSON.parse(storedLinks);
+// Load links from JSON file
+async function loadLinks() {
+    try {
+        const response = await fetch('links.json');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error loading links:', error);
+        return {
+            'jpeg-links': [],
+            'tutorials': [],
+            'events': []
+        };
     }
-    
-    // Save default data to localStorage
-    localStorage.setItem('photographerClubLinks', JSON.stringify(linkStorage));
-    return linkStorage;
-}
-
-// Save links to localStorage
-function saveLinks(links) {
-    localStorage.setItem('photographerClubLinks', JSON.stringify(links));
 }
 
 // Display links for each category
-function displayLinks() {
-    const links = loadLinks();
+async function displayLinks() {
+    const links = await loadLinks();
     
     // Display JPEG links
     const jpegContainer = document.getElementById('jpegLinksContainer');
     jpegContainer.innerHTML = '';
-    links['jpeg-links'].forEach(link => {
-        const linkElement = createLinkElement(link, 'jpeg-links');
-        jpegContainer.appendChild(linkElement);
-    });
+    if (links['jpeg-links']) {
+        links['jpeg-links'].forEach(link => {
+            const linkElement = createLinkElement(link, 'jpeg-links');
+            jpegContainer.appendChild(linkElement);
+        });
+    }
     
     // Display Tutorial links
     const tutorialsContainer = document.getElementById('tutorialsLinksContainer');
     tutorialsContainer.innerHTML = '';
-    links['tutorials'].forEach(link => {
-        const linkElement = createLinkElement(link, 'tutorials');
-        tutorialsContainer.appendChild(linkElement);
-    });
+    if (links['tutorials']) {
+        links['tutorials'].forEach(link => {
+            const linkElement = createLinkElement(link, 'tutorials');
+            tutorialsContainer.appendChild(linkElement);
+        });
+    }
     
     // Display Event links
     const eventsContainer = document.getElementById('eventsLinksContainer');
     eventsContainer.innerHTML = '';
-    links['events'].forEach(link => {
-        const linkElement = createLinkElement(link, 'events');
-        eventsContainer.appendChild(linkElement);
-    });
+    if (links['events']) {
+        links['events'].forEach(link => {
+            const linkElement = createLinkElement(link, 'events');
+            eventsContainer.appendChild(linkElement);
+        });
+    }
 }
 
 // Create a link element with delete functionality if authenticated
@@ -74,87 +73,31 @@ function createLinkElement(link, category) {
     linkDiv.appendChild(linkAnchor);
     
     // Add delete button if authenticated
-    if (isAuthenticated) {
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.style.marginLeft = '10px';
-        deleteButton.style.padding = '3px 8px';
-        deleteButton.style.background = '#e74c3c';
-        deleteButton.style.color = 'white';
-        deleteButton.style.border = 'none';
-        deleteButton.style.borderRadius = '3px';
-        deleteButton.style.cursor = 'pointer';
+    // if (isAuthenticated) {
+    //     const deleteButton = document.createElement('button');
+    //     deleteButton.textContent = 'Delete';
+    //     deleteButton.style.marginLeft = '10px';
+    //     deleteButton.style.padding = '3px 8px';
+    //     deleteButton.style.background = '#e74c3c';
+    //     deleteButton.style.color = 'white';
+    //     deleteButton.style.border = 'none';
+    //     deleteButton.style.borderRadius = '3px';
+    //     deleteButton.style.cursor = 'pointer';
         
-        deleteButton.addEventListener('click', () => {
-            deleteLink(link, category);
-        });
+    //     deleteButton.addEventListener('click', () => {
+    //         alert('Please update the links.json file to remove this link');
+    //     });
         
-        linkDiv.appendChild(deleteButton);
-    }
+    //     linkDiv.appendChild(deleteButton);
+    // }
     
     return linkDiv;
-}
-
-// Delete a link
-function deleteLink(linkToDelete, category) {
-    if (!isAuthenticated) return;
-    
-    const links = loadLinks();
-    links[category] = links[category].filter(link => 
-        link.url !== linkToDelete.url || link.title !== linkToDelete.title
-    );
-    
-    saveLinks(links);
-    displayLinks();
-}
-
-// Add a new link
-function addLink(category) {
-    if (!isAuthenticated) return;
-    
-    let urlInput, titleInput;
-    
-    if (category === 'jpeg-links') {
-        urlInput = document.getElementById('linkUrl');
-        titleInput = document.getElementById('linkTitle');
-    } else if (category === 'tutorials') {
-        urlInput = document.getElementById('tutorialLinkUrl');
-        titleInput = document.getElementById('tutorialLinkTitle');
-    } else if (category === 'events') {
-        urlInput = document.getElementById('eventLinkUrl');
-        titleInput = document.getElementById('eventLinkTitle');
-    }
-    
-    const url = urlInput.value.trim();
-    const title = titleInput.value.trim();
-    
-    if (!url || !title) {
-        alert('Please enter both URL and title');
-        return;
-    }
-    
-    // Add http:// if missing
-    const formattedUrl = url.startsWith('http') ? url : `http://${url}`;
-    
-    const links = loadLinks();
-    links[category].push({ url: formattedUrl, title });
-    saveLinks(links);
-    
-    // Clear inputs
-    urlInput.value = '';
-    titleInput.value = '';
-    
-    // Close admin panel
-    document.querySelector(`.admin-panel[data-for="${category}"]`).classList.remove('active');
-    
-    // Refresh display
-    displayLinks();
 }
 
 // Authentication functions
 function checkAuth() {
     passwordInput.value = '';
-    const token = localStorage.getItem('photographerAuthToken');
+    const token = sessionStorage.getItem('photographerAuthToken');
     if (token === 'authenticated') {
         authenticateUser();
     }
@@ -164,13 +107,13 @@ function authenticateUser() {
     isAuthenticated = true;
     authOverlay.classList.add('hidden');
     logoutButton.classList.remove('hidden');
-    localStorage.setItem('photographerAuthToken', 'authenticated');
+    sessionStorage.setItem('photographerAuthToken', 'authenticated');
     displayLinks(); // Refresh with delete buttons
 }
 
 function logout() {
     isAuthenticated = false;
-    localStorage.removeItem('photographerAuthToken');
+    sessionStorage.removeItem('photographerAuthToken');
     logoutButton.classList.add('hidden');
     authOverlay.classList.remove('hidden');
     displayLinks(); // Refresh without delete buttons
@@ -196,67 +139,19 @@ logoutButton.addEventListener('click', logout);
 addLinkButtons.forEach(button => {
     button.addEventListener('click', () => {
         if (!isAuthenticated) {
-            alert('You need to login to add links');
+            alert('You need to login to view editing instructions');
             return;
         }
         
-        const category = button.getAttribute('data-category');
-        const targetPanel = document.querySelector(`.admin-panel[data-for="${category}"]`);
-        
-        // Close all other panels
-        adminPanels.forEach(panel => {
-            if (panel !== targetPanel) {
-                panel.classList.remove('active');
-            }
-        });
-        
-        // Toggle this panel
-        targetPanel.classList.toggle('active');
+        alert('To add or remove links, please update the links.json file in the repository.');
     });
 });
 
-// Handle add link form submissions
-submitButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const category = button.getAttribute('data-category');
-        addLink(category);
-    });
-});
+// Check for updates every 5 minutes
+setInterval(displayLinks, 300000);
 
 // Initialize
 window.addEventListener('DOMContentLoaded', () => {
     displayLinks();
     checkAuth();
 });
-
-// When adding links, update the URL
-function addLinkAndUpdateURL(category, url, title) {
-    // Add to localStorage
-    const links = JSON.parse(localStorage.getItem('links') || '{}');
-    if (!links[category]) links[category] = [];
-    links[category].push({url, title});
-    localStorage.setItem('links', JSON.stringify(links));
-    
-    // Create shareable URL
-    const encodedLinks = encodeURIComponent(JSON.stringify(links));
-    const newURL = window.location.origin + window.location.pathname + '?data=' + encodedLinks;
-    
-    // Update history and display link
-    window.history.pushState({}, '', newURL);
-    alert("Share this URL for others to see these links: " + newURL);
-  }
-  
-  // On page load, check for URL parameters
-  function loadFromURL() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const data = urlParams.get('data');
-    if (data) {
-      try {
-        const links = JSON.parse(decodeURIComponent(data));
-        localStorage.setItem('links', JSON.stringify(links));
-        displayLinks();
-      } catch (e) {
-        console.error("Error parsing URL data", e);
-      }
-    }
-  }
