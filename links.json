@@ -1,9 +1,35 @@
 {
     "jpeg-links": [
-        {"url": "https://drive.google.com/drive/folders/1EwGOMM3p8KGZSgnY0cdRAYpsFfug40qF?usp=drive_link", "title": "XENITH 2K25 " ,"coveredby": "Aryan, Jahnavi, Hrishita, Anoushka, Saransh, Kohsheen, Luv, Kushagra R. " },
-        {"url": "https://drive.google.com/drive/folders/1_44G6umLbTMm3yeo8gEk78tzZQ4uQXM-?usp=drive_link", "title": "ICABB 2K25"  ,"coveredby": "Aryan, Hrishita, Jahnavi, Saransh,  Kohsheen , Anmol, Luv, Kushagra R., Kushagrr  "},
-        {"url": "https://drive.google.com/drive/folders/19uGPxj3dHePVaQ0CowG6somkpXWCLkwy?usp=drive_link", "title": "KNUTH-INTERVIEW 2K25" ,"coveredby": "Aryan, Kushagra Rastogi"},
-        {"url": "https://drive.google.com/drive/folders/1BLyHtdMvKTwogezsGPxLUZMtS8FO1-P2?usp=drive_link", "title": "HSS DEPART" ,"coveredby": "Aryan , Nandini"},
-        {"url": "https://drive.google.com/drive/folders/189-b-e90v5L44baiCCQ6RoGhyvn36e26?usp=drive_link", "title": "AI-WORKSHOP 2K25" ,"coveredby": "Aryan Jahnavi, Luv, Anmol"}
+        {
+            "url": "https://drive.google.com/drive/folders/1EwGOMM3p8KGZSgnY0cdRAYpsFfug40qF?usp=drive_link",
+            "title": "XENITH 2K25 ",
+            "coveredby": "Aryan, Jahnavi, Hrishita, Anoushka, Saransh, Kohsheen, Luv, Kushagra R. ",
+            "logo": "assets/ieee.png"
+        },
+        {
+            "url": "https://drive.google.com/drive/folders/1_44G6umLbTMm3yeo8gEk78tzZQ4uQXM-?usp=drive_link",
+            "title": "ICABB 2K25",
+            "coveredby": "Aryan, Hrishita, Jahnavi, Saransh,  Kohsheen , Anmol, Luv, Kushagra R., Kushagrr  " ,
+            "logo": "assets/icabb.jpg"
+
+        },
+        {
+            "url": "https://drive.google.com/drive/folders/19uGPxj3dHePVaQ0CowG6somkpXWCLkwy?usp=drive_link",
+            "title": "KNUTH-INTERVIEW 2K25",
+            "coveredby": "Aryan, Kushagra Rastogi",
+            "logo": "assets/knuth.jpg"
+        },
+        {
+            "url": "https://drive.google.com/drive/folders/1BLyHtdMvKTwogezsGPxLUZMtS8FO1-P2?usp=drive_link",
+            "title": "HSS DEPART",
+            "coveredby": "Aryan , Nandini",
+            "logo": "assets/jiitlogo.jpg"
+        },
+        {
+            "url": "https://drive.google.com/drive/folders/189-b-e90v5L44baiCCQ6RoGhyvn36e26?usp=drive_link",
+            "title": "AI-WORKSHOP 2K25",
+            "coveredby": "Aryan Jahnavi, Luv, Anmol",
+            "logo": "assets/knuth.jpg"
+        } 
     ]
 }

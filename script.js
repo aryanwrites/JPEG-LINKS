@@ -40,8 +40,6 @@ async function displayLinks() {
             jpegContainer.appendChild(linkElement);
         });
     }
-    
-
 }
 
 // Create a link element with delete functionality if authenticated
@@ -95,6 +93,11 @@ function createLinkElement(link, category) {
     const titleContainer = document.createElement('div');
     titleContainer.className = 'title-container';
 
+    // Creating club logo
+    const clublogo = document.createElement('img');
+    clublogo.className = 'club_logo' ;
+    clublogo.src = link.logo ;
+    
     // Creating title element
     const titleElement = document.createElement('h4');
     titleElement.textContent = link.title;
@@ -105,6 +108,7 @@ function createLinkElement(link, category) {
     coveredbyElement.textContent = `Covered by: ${link.coveredby}`;
 
     // Append title and coveredBy inside titleContainer
+    titleContainer.appendChild(clublogo);
     titleContainer.appendChild(titleElement);
     titleContainer.appendChild(coveredbyElement);
 
