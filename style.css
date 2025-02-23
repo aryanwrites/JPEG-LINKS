@@ -21,6 +21,13 @@ header {
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
+.page1{
+    height: 100vh;
+    width: 100vw;
+    /* border: 2px solid red; */
+    overflow: auto;
+}
+
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
@@ -33,6 +40,19 @@ header {
     margin-right: 10px;
 }
 
+#logoutButton{
+    padding: 10px 20px;
+    background-color: 	#7b858c;
+    border-radius: 12px;
+    color: white;
+    box-shadow: 0px 2px 15px -3px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+}
+
+#logoutButton:hover{
+    background-color: #222;
+}
+
 .main-container {
     display: flex;
     min-height: calc(100vh - 60px);
@@ -43,6 +63,9 @@ header {
     background-color: #333;
     color: white;
     padding: 1rem;
+    /* border: 2px solid red; */
+    height: 100vh;
+    overflow: auto;
 }
 
 .sidebar h3 {
@@ -85,6 +108,9 @@ header {
 
 .category-content {
     padding: 1rem;
+    overflow: auto;
+    width: 100%;
+    height: auto;
 }
 
 .link-item {
